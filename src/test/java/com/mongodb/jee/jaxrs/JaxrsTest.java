@@ -3,9 +3,13 @@ package com.mongodb.jee.jaxrs;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
@@ -13,6 +17,7 @@ import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,6 +26,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
+import com.mongodb.jee.PageResult;
 import com.mongodb.jee.service.PersonService;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
@@ -29,6 +35,7 @@ import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.MongodConfig;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
+import dojo.store.RequestPageRange;
 
 public class JaxrsTest {
 
@@ -58,14 +65,14 @@ public class JaxrsTest {
 				Network.localhostIsIPv6()));
 		mongod = mongodExe.start();
 		mongo = new Mongo("localhost", 12345);
-		
+
 		DB db = mongo.getDB(DATABASE_NAME);
 		DBCollection col = db.getCollection("persons");
-		
+
 		DBObject person = new BasicDBObject();
 		person.put("name", "xxx");
 		col.insert(person);
-		
+
 	}
 
 	private void startJettyServer() throws Exception {
@@ -95,16 +102,16 @@ public class JaxrsTest {
 		}
 	}
 
-	 @Test
+	@Test
 	public void shouldCreateNewObjectInEmbeddedMongoDb() {
 		// given
-//		DB db = mongo.getDB(DATABASE_NAME);
-//		DBCollection col = db.getCollection("persons");
-//		
-//		DBObject person = new BasicDBObject();
-//		person.put("name", "xxx");
-//		col.insert(person);
-//		
+		// DB db = mongo.getDB(DATABASE_NAME);
+		// DBCollection col = db.getCollection("persons");
+		//
+		// DBObject person = new BasicDBObject();
+		// person.put("name", "xxx");
+		// col.insert(person);
+		//
 		// DBCollection col = db.createCollection("testCollection", new
 		// BasicDBObject());
 
@@ -118,12 +125,82 @@ public class JaxrsTest {
 	public void t() {
 
 		List providers = new ArrayList();
+		providers.add(new DBObjectIteratorProvider());
 		providers.add(new BSONObjectProvider());
-		
+		providers.add(new PageResultProvider());
+
 		PersonService client = JAXRSClientFactory.create(BASE_ADDRESS,
 				PersonService.class, providers);
 
 		DBObject person = client.findOne();
+
 		System.err.println(person);
+
+		Iterator<DBObject> persons = client.find();
+		while (persons.hasNext()) {
+			DBObject p = persons.next();
+			System.err.println(p);
+		}
+
+	}
+
+	@Test
+	public void findPage() {
+		List providers = new ArrayList();
+		providers.add(new DBObjectIteratorProvider());
+		providers.add(new BSONObjectProvider());
+		providers.add(new PageResultProvider());
+
+		PersonService client = JAXRSClientFactory.create(BASE_ADDRESS,
+				PersonService.class, providers);
+
+		WebClient.getConfig(client).getInInterceptors()
+				.add(new LoggingInInterceptor());
+		WebClient.getConfig(client).getOutInterceptors()
+				.add(new LoggingOutInterceptor());
+
+		PageResult page = client.findPage(0, 9);
+		Assert.assertEquals(0, page.getFromItemIndex());
+		Assert.assertEquals(9, page.getToItemIndex());
+		Assert.assertEquals(1, page.getTotalItems());
+
+		Iterator<DBObject> persons = page.getItems();
+		while (persons.hasNext()) {
+			DBObject p = persons.next();
+			System.err.println(p);
+		}
+
+		System.err.println(page.getTotalItems());
+	}
+
+	@Test
+	public void findPageRange() {
+		List providers = new ArrayList();
+		providers.add(new DBObjectIteratorProvider());
+		providers.add(new BSONObjectProvider());
+		providers.add(new PageResultProvider());
+
+		PersonService client = JAXRSClientFactory.create(BASE_ADDRESS,
+				PersonService.class, providers);
+
+		WebClient.getConfig(client).getInInterceptors()
+				.add(new LoggingInInterceptor());
+		WebClient.getConfig(client).getOutInterceptors()
+				.add(new LoggingOutInterceptor());
+
+		RequestPageRange range = new RequestPageRange(0, 9);
+		PageResult page = client.findPage(range);
+
+		Assert.assertEquals(0, page.getFromItemIndex());
+		Assert.assertEquals(9, page.getToItemIndex());
+		Assert.assertEquals(1, page.getTotalItems());
+
+		Iterator<DBObject> persons = page.getItems();
+		while (persons.hasNext()) {
+			DBObject p = persons.next();
+			System.err.println(p);
+		}
+
+		System.err.println(page.getTotalItems());
 	}
 }

@@ -1,10 +1,13 @@
 package com.mongodb.jee;
 
+import java.util.Iterator;
+
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 public class PageResult {
 
-	private final DBCursor items;
+	private final Iterator<DBObject> items;
 	private final int fromItemIndex;
 	private final int toItemIndex;
 	private final int totalItems;
@@ -14,7 +17,7 @@ public class PageResult {
 				fromItemIndex, toItemIndex, cursor.count());
 	}
 
-	public PageResult(DBCursor items, int fromItemIndex, int toItemIndex,
+	public PageResult(Iterator<DBObject> items, int fromItemIndex, int toItemIndex,
 			int totalItems) {
 		this.items = items;
 		this.fromItemIndex = fromItemIndex;
@@ -22,7 +25,7 @@ public class PageResult {
 		this.totalItems = totalItems;
 	}
 
-	public DBCursor getItems() {
+	public Iterator<DBObject> getItems() {
 		return items;
 	}
 

@@ -18,7 +18,7 @@
 		<init-param>
 			<param-name>jaxrs.providers</param-name>
 			<param-value>
-				com.mongodb.jee.jaxrs.DBCursorProvider,
+				com.mongodb.jee.jaxrs.DBObjectIteratorProvider,
 				com.mongodb.jee.jaxrs.BSONObjectProvider,
 				com.mongodb.jee.jaxrs.PageResultProvider
 			</param-value>
