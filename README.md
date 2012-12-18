@@ -6,9 +6,9 @@ What is Mongo JEE?
 **Mongo JEE** is a JAR which provides simply but usefull Java classes to use this driver in JEE context like using JAX-RS with [com.mongodb.DBObject](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb/DBObject.java),
 connect/disconnect to Mongo with ServletContextListener, etc
 
-Here the detailled features of the Mongo JEE:
+Here the list of the features provided by Mongo JEE:
 
-* JAX-RS support for MongoDB to use Mongo Java classes (DBObject, DBCursor, etc) in the methods of REST service. Here a sample to use com.mongodb.DBObject : 
+* J[JAX RS support for MongoDB] (https://github.com/angelozerr/mongo-jee/wiki/JAX-RS-support-for-MongoDB) to use Mongo Java structures (DBObject, DBCursor, etc) in the methods of your REST service. Here a sample service which returns the com.mongodb.DBObject : 
   	
   	  	@Path("/")
   	  	public class ProductService {
@@ -23,7 +23,7 @@ Here the detailled features of the Mongo JEE:
             }
   	  	}
 
-The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBodyWriter) which serialize/deserialize DBObject, DBCursor, etc to JSON.
+The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBodyWriter) which serialize/deserialize DBObject, DBCursor, etc to JSON stream.
 
 * JSON streaming to use Writer (ex : Writer of a Srevlet) or OutputStream (ex:OutputStream of JAX-RS MessageBodyWriter).
 
