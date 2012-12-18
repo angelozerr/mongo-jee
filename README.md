@@ -22,6 +22,9 @@ The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBody
 
 * JSON streaming to use Writer (ex : Writer of a Srevlet) or OutputStream (ex:OutputStream of JAX-RS MessageBodyWriter).
 
+ * JSON#serialize(Object o, Writer writer)
+ * JSON#serialize(Object o, OutputStream out)
+
 * initialize Mongo instance with ServletContextListener.  
 
 
