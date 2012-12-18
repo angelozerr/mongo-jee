@@ -22,5 +22,19 @@ The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBody
 
 * JSON streaming to use Writer (ex : Writer of a Srevlet) or OutputStream (ex:OutputStream of JAX-RS MessageBodyWriter).
 
-* initialize Mongo instance with ServletContextListener.
+* initialize Mongo instance with ServletContextListener.  
+
+
+      	<listener>		
+      	  <listener-class>com.mongodb.jee.servlet.MongoServletContextListener
+       	  </listener-class>
+      	</listener>
+
+      	<context-param>
+      	  <param-name>mongoURI</param-name>
+      	  <param-value>mongodb://localhost:12345</param-value>
+      	</context-param>
+        
+After that you can use MongoProvider.getMongo() anywhere
+
 
