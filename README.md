@@ -12,7 +12,7 @@ mongo-jee is a JEE support for MongoDB :
   	  	  	@Path("/findOne")
   	  	  	@Produces(MediaType.APPLICATION_JSON)
   	  	  	public DBObject findOne(){
-      	  	  DB db = MongoProvider.getMongo().getDB("ecommerce");
+      	  	  DB db = mongo.getDB("ecommerce");
       	  	  DBCollection col = db.getCollection("products");
         	  	return col.findOne();            
             }
