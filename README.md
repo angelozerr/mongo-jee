@@ -32,11 +32,6 @@ The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBody
 
 * initialize Mongo instance with ServletContextListener.  
 
-Download
-=========
-
-Only source are available.
-
 
       	<listener>		
       	  <listener-class>com.mongodb.jee.servlet.MongoServletContextListener
@@ -49,5 +44,10 @@ Only source are available.
       	</context-param>
         
 After that you can use MongoProvider.getMongo() anywhere
+
+Download
+=========
+
+Only source are available.
 
 
