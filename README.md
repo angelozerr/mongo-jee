@@ -26,18 +26,29 @@ Here the list of the features provided by Mongo JEE:
 The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBodyWriter) which serialize/deserialize DBObject, DBCursor, etc to JSON stream.
 
 * JSON streaming : Mongo Java  Driver provides com.mongodb.util.[JSON](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb/util/JSON.java) helper to serialize
-DBObject, DBCursor etc to JSON stream but it works only with StringBuilder. On other words if you wish to write JSON to HTTP response writer, JAX-RS response OutputStream, 
-you must build a JSON String before and write this String to the writer/OutputStream.
+DBObject, DBCursor etc to JSON stream but it works only with StringBuilder. Here a sample to write DBObject in HTTP response Write 
+
+        HttpServletResponse response = ...
+        DBObject o = ...
+        // Serialize the JSON DBOBject in a String
+        StringBuilder json = new StringBuilder()
+        com.mongodb.util.JSON.serialize(o, json);
+        // Write the JSON string
+        response.getWriter().write(json.toString());
 
 Mongo JEE provides com.mongodb.jee.util.[JSON](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb/util/JSON.java)
-which works with Writer/OutputStream, on other words it provides :
+which works with Writer/OutputStream, 
+
+        HttpServletResponse response = ...
+        DBObject o = ...
+        // Serialize the JSON DBOBject in the HTTP response Writer
+        com.mongodb.jee.util.JSON.serialize(o, response.getWriter());
+
+on other words it provides 2 methods :
 
  * JSON#serialize(Object o, Writer writer)
  * JSON#serialize(Object o, OutputStream out)
-
-      	HttpServletResponse response
-        
-
+      
 * initialize Mongo instance with ServletContextListener.  
 
 
