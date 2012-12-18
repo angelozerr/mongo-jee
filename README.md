@@ -8,7 +8,7 @@ connect/disconnect to Mongo with ServletContextListener, etc
 
 Here the list of the features provided by Mongo JEE:
 
-* J[JAX RS support for MongoDB] (https://github.com/angelozerr/mongo-jee/wiki/JAX-RS-support-for-MongoDB) to use Mongo Java structures (DBObject, DBCursor, etc) in the methods of your REST service. Here a sample service which returns the com.mongodb.DBObject : 
+* [JAX-RS support for MongoDB] (https://github.com/angelozerr/mongo-jee/wiki/JAX-RS-support-for-MongoDB) to use Mongo Java structures (DBObject, DBCursor, etc) in the methods of your REST service. Here a sample service which returns the com.mongodb.DBObject : 
   	
   	  	@Path("/")
   	  	public class ProductService {
