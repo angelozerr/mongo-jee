@@ -1,7 +1,12 @@
-mongo-jee
+What is Mongo JEE?
 =========
 
-mongo-jee is a JEE support for MongoDB :
+[Mongo Java Driver] (https://github.com/mongodb/mongo-java-driver) gives you the capability to connect and use NoSQL MongoDB with Java code.
+
+**Mongo JEE** is a JAR which provides simply but usefull Java classes to use this driver in JEE context like using JAX-RS with [com.mongodb.DBObject](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb/DBObject.java),
+connect/disconnect to Mongo with ServletContextListener, etc
+
+Here the detailled features of the Mongo JEE:
 
 * JAX-RS support for MongoDB to use Mongo Java classes (DBObject, DBCursor, etc) in the methods of REST service. Here a sample to use com.mongodb.DBObject : 
   	
@@ -26,6 +31,11 @@ The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBody
  * JSON#serialize(Object o, OutputStream out)
 
 * initialize Mongo instance with ServletContextListener.  
+
+Download
+=========
+
+Only source are available.
 
 
       	<listener>		
