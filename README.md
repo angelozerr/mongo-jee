@@ -19,13 +19,13 @@ Here the list of the features provided by Mongo JEE:
   	  	  	public DBObject findOne(){
       	  	  DB db = mongo.getDB("ecommerce");
       	  	  DBCollection col = db.getCollection("products");
-        	  	return col.findOne();            
+          	  return col.findOne();            
             }
   	  	}
 
 The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBodyWriter) which serialize/deserialize DBObject, DBCursor, etc to JSON stream.
 
-* JSON streaming : Mongo Java  Driver provides com.mongodb.util.[JSON](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb/util/JSON.java) helper to serialize
+* [JSON streaming](https://github.com/angelozerr/mongo-jee/wiki/JSON-Streaming) : Mongo Java  Driver provides com.mongodb.util.[JSON](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb/util/JSON.java) helper to serialize
 DBObject, DBCursor etc to JSON stream but it works only with StringBuilder. Here a sample to write DBObject in HTTP response Write 
 
         HttpServletResponse response = ...
@@ -37,22 +37,16 @@ DBObject, DBCursor etc to JSON stream but it works only with StringBuilder. Here
         response.getWriter().write(json.toString());
 
 Mongo JEE provides com.mongodb.jee.util.[JSON](https://github.com/angelozerr/mongo-jee/blob/master/src/main/java/com/mongodb/jee/util/JSON.java)
-which works with Writer/OutputStream, 
+which works with Writer/OutputStream:
 
         HttpServletResponse response = ...
         DBObject o = ...
         // Serialize the JSON DBOBject in the HTTP response Writer
         com.mongodb.jee.util.JSON.serialize(o, response.getWriter());
-
-on other words it provides 2 methods :
-
- * JSON#serialize(Object o, Writer writer)
- * JSON#serialize(Object o, OutputStream out)
       
 This idea was suggested to Mongo Java Driver in the [JAVA-709 issue](https://jira.mongodb.org/browse/JAVA-709)
 
-* initialize Mongo instance with ServletContextListener.  
-
+* [Initialize Mongo with ServletContextListener] (https://github.com/angelozerr/mongo-jee/wiki/Initialize-Mongo-with-ServletContextListener):  
 
       	<listener>		
       	  <listener-class>com.mongodb.jee.servlet.MongoServletContextListener
@@ -64,7 +58,7 @@ This idea was suggested to Mongo Java Driver in the [JAVA-709 issue](https://jir
       	  <param-value>mongodb://localhost:12345</param-value>
       	</context-param>
         
-After that you can use MongoProvider.getMongo() anywhere
+Once MongoServletContextListener is started, you can use MongoProvider.getMongo() anywhere
 
 Download
 =========
