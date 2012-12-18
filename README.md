@@ -36,7 +36,7 @@ DBObject, DBCursor etc to JSON stream but it works only with StringBuilder. Here
         // Write the JSON string
         response.getWriter().write(json.toString());
 
-Mongo JEE provides com.mongodb.jee.util.[JSON](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb/util/JSON.java)
+Mongo JEE provides com.mongodb.jee.util.[JSON](https://github.com/angelozerr/mongo-jee/blob/master/src/main/java/com/mongodb/jee/util/JSON.java)
 which works with Writer/OutputStream, 
 
         HttpServletResponse response = ...
@@ -49,6 +49,8 @@ on other words it provides 2 methods :
  * JSON#serialize(Object o, Writer writer)
  * JSON#serialize(Object o, OutputStream out)
       
+This idea was suggested to Mongo Java Driver in the [JAVA-709 isue](https://jira.mongodb.org/browse/JAVA-709)
+
 * initialize Mongo instance with ServletContextListener.  
 
 
