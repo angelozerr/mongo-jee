@@ -49,7 +49,7 @@ on other words it provides 2 methods :
  * JSON#serialize(Object o, Writer writer)
  * JSON#serialize(Object o, OutputStream out)
       
-This idea was suggested to Mongo Java Driver in the [JAVA-709 isue](https://jira.mongodb.org/browse/JAVA-709)
+This idea was suggested to Mongo Java Driver in the [JAVA-709 issue](https://jira.mongodb.org/browse/JAVA-709)
 
 * initialize Mongo instance with ServletContextListener.  
 
