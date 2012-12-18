@@ -18,8 +18,8 @@ package com.mongodb.jee.jaxrs;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringWriter;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import javax.ws.rs.Consumes;
@@ -29,57 +29,55 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.commons.io.IOUtils;
-import org.bson.BSONObject;
-
+import com.mongodb.DBObject;
+import com.mongodb.jee.util.BSONHelper;
 import com.mongodb.jee.util.JSON;
 
 /**
  * 
- * JAX-RS {@link BSONObject} provider.
+ * JAX-RS {@link Iterable<DBObject>} provider.
  * 
  */
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class BSONObjectProvider extends AbstractProvider<BSONObject> {
+public class DBObjectIterableProvider extends
+		AbstractProvider<Iterable<DBObject>> {
 
-	public void writeTo(BSONObject BSONObject, Class<?> type, Type genericType,
-			Annotation[] annotations, MediaType mediaType,
+	public void writeTo(Iterable<DBObject> cursor, Class<?> type,
+			Type genericType, Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
 			WebApplicationException {
-
-		JSON.serialize(BSONObject, entityStream);
+		JSON.serialize(cursor, entityStream);
 	}
 
-	public BSONObject readFrom(Class<BSONObject> type, Type genericType,
-			Annotation[] annotations, MediaType mediaType,
+	public Iterable<DBObject> readFrom(Class<Iterable<DBObject>> type,
+			Type genericType, Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 
-		StringWriter writer = new StringWriter();
-		IOUtils.copy(entityStream, writer);
-		String json = writer.toString();
-
-		return (BSONObject) JSON.parse(json);
+		return BSONHelper.toIterable(entityStream);
 	}
 
-	/**
-	 * Returns true if the given type is a {@link BSONObject} and the given
-	 * media type is "application/json".
-	 * 
-	 * @param type
-	 *            clas type.
-	 * @param mediaType
-	 *            media type.
-	 * @return
-	 */
 	@Override
-	protected boolean isSupported(java.lang.Class<?> type, Type genericType,
+	protected boolean isSupported(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		return BSONObject.class.isAssignableFrom(type)
-				&& mediaType.isCompatible(MediaType.APPLICATION_JSON_TYPE);
+		if (!Iterable.class.isAssignableFrom(type)) {
+			return false;
+		}
+		if (genericType instanceof ParameterizedType) {
+			ParameterizedType parameterizedType = (ParameterizedType) genericType;
+			Type[] actualTypeArguments = parameterizedType
+					.getActualTypeArguments();
+			for (int i = 0; i < actualTypeArguments.length; i++) {
+				Class<?> a = (Class<?>) actualTypeArguments[i];
+				if (DBObject.class.isAssignableFrom(a)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

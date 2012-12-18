@@ -12,13 +12,13 @@
 		<init-param>
 			<param-name>jaxrs.serviceClasses</param-name>
 			<param-value>
-				com.mongodb.jee.service.PersonServiceImpl
+				com.mongodb.jee.service.MockProductServiceImpl
 			</param-value>
 		</init-param>
 		<init-param>
 			<param-name>jaxrs.providers</param-name>
 			<param-value>
-				com.mongodb.jee.jaxrs.DBObjectIteratorProvider,
+				com.mongodb.jee.jaxrs.DBObjectIterableProvider,
 				com.mongodb.jee.jaxrs.BSONObjectProvider,
 				com.mongodb.jee.jaxrs.PageResultProvider
 			</param-value>

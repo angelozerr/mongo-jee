@@ -1,3 +1,18 @@
+/**
+ *      Copyright (C) 2012 Angelo Zerr <angelo.zerr@gmail.com>.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 package com.mongodb.jee.jaxrs;
 
 import java.io.IOException;
@@ -5,13 +20,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.Iterator;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.MessageBodyWriter;
+import javax.ws.rs.ext.Provider;
 
 import com.mongodb.DBObject;
 import com.mongodb.jee.PageResult;
@@ -19,20 +34,17 @@ import com.mongodb.jee.util.BSONHelper;
 import com.mongodb.jee.util.JSON;
 
 import dojo.store.JsonRestHelper;
-import dojo.store.ResponsePageRange;
+import dojo.store.PageRangeResponse;
 
-public class PageResultProvider implements MessageBodyReader<PageResult>,
-		MessageBodyWriter<PageResult> {
-
-	public boolean isWriteable(Class<?> type, Type genericType,
-			Annotation[] annotations, MediaType mediaType) {
-		return PageResult.class.isAssignableFrom(type);
-	}
-
-	public long getSize(PageResult page, Class<?> type, Type genericType,
-			Annotation[] annotations, MediaType mediaType) {
-		return -1;
-	}
+/**
+ * 
+ * JAX-RS {@link PageResult} provider.
+ * 
+ */
+@Provider
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public class PageResultProvider extends AbstractProvider<PageResult> {
 
 	public void writeTo(PageResult page, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
@@ -43,7 +55,7 @@ public class PageResultProvider implements MessageBodyReader<PageResult>,
 		setContentRange(httpHeaders, page.getFromItemIndex(),
 				page.getToItemIndex(), page.getTotalItems());
 
-		Iterator<DBObject> cursor = page.getItems();
+		Iterable<DBObject> cursor = page.getItems();
 		JSON.serialize(cursor, entityStream);
 	}
 
@@ -55,19 +67,14 @@ public class PageResultProvider implements MessageBodyReader<PageResult>,
 				range);
 	}
 
-	public boolean isReadable(Class<?> type, Type genericType,
-			Annotation[] annotations, MediaType mediaType) {
-		return PageResult.class.isAssignableFrom(type);
-	}
-
 	public PageResult readFrom(Class<PageResult> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 
-		ResponsePageRange range = getContentRange(httpHeaders);
+		PageRangeResponse range = getContentRange(httpHeaders);
 
-		Iterator<DBObject> items = BSONHelper.toIterator(entityStream);
+		Iterable<DBObject> items = BSONHelper.toIterable(entityStream);
 
 		int fromItemIndex = range.getFromIndex();
 		int toItemIndex = range.getToIndex();
@@ -75,11 +82,28 @@ public class PageResultProvider implements MessageBodyReader<PageResult>,
 		return new PageResult(items, fromItemIndex, toItemIndex, totalItems);
 	}
 
-	protected ResponsePageRange getContentRange(
+	protected PageRangeResponse getContentRange(
 			MultivaluedMap<String, String> httpHeaders) {
 		String contentRange = httpHeaders
 				.getFirst(JsonRestHelper.CONTENT_RANGE_RESPONSE_HEADER);
 		return JsonRestHelper.getResponseRange(contentRange);
+	}
+
+	/**
+	 * Returns true if the given type is a {@link PageResult} and the given
+	 * media type is "application/json".
+	 * 
+	 * @param type
+	 *            clas type.
+	 * @param mediaType
+	 *            media type.
+	 * @return
+	 */
+	@Override
+	protected boolean isSupported(java.lang.Class<?> type, Type genericType,
+			Annotation[] annotations, MediaType mediaType) {
+		return PageResult.class.isAssignableFrom(type)
+				&& mediaType.isCompatible(MediaType.APPLICATION_JSON_TYPE);
 	}
 
 }

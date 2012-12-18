@@ -8,9 +8,9 @@ import com.mongodb.DBObject;
 import com.mongodb.jee.PageResult;
 import com.mongodb.jee.servlet.MongoProvider;
 
-import dojo.store.RequestPageRange;
+import dojo.store.PageRangeRequest;
 
-public class PersonServiceImpl implements PersonService {
+public class ProductServiceImpl implements ProductService {
 
 	public DBObject findOne() {
 		DB db = MongoProvider.getMongo().getDB("contact");
@@ -18,7 +18,7 @@ public class PersonServiceImpl implements PersonService {
 		return col.findOne();
 	}
 
-	public Iterator<DBObject> find() {
+	public Iterable<DBObject> find() {
 		DB db = MongoProvider.getMongo().getDB("contact");
 		DBCollection col = db.getCollection("persons");
 		return col.find();
@@ -30,7 +30,7 @@ public class PersonServiceImpl implements PersonService {
 		return new PageResult(col.find(), fromItemIndex, toItemIndex);
 	}
 
-	public PageResult findPage(RequestPageRange range) {
+	public PageResult findPage(PageRangeRequest range) {
 		DB db = MongoProvider.getMongo().getDB("contact");
 		DBCollection col = db.getCollection("persons");
 		return new PageResult(col.find(), range.getFromIndex(),

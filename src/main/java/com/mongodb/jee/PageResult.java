@@ -7,7 +7,7 @@ import com.mongodb.DBObject;
 
 public class PageResult {
 
-	private final Iterator<DBObject> items;
+	private final Iterable<DBObject> items;
 	private final int fromItemIndex;
 	private final int toItemIndex;
 	private final int totalItems;
@@ -17,7 +17,7 @@ public class PageResult {
 				fromItemIndex, toItemIndex, cursor.count());
 	}
 
-	public PageResult(Iterator<DBObject> items, int fromItemIndex, int toItemIndex,
+	public PageResult(Iterable<DBObject> items, int fromItemIndex, int toItemIndex,
 			int totalItems) {
 		this.items = items;
 		this.fromItemIndex = fromItemIndex;
@@ -25,7 +25,7 @@ public class PageResult {
 		this.totalItems = totalItems;
 	}
 
-	public Iterator<DBObject> getItems() {
+	public Iterable<DBObject> getItems() {
 		return items;
 	}
 

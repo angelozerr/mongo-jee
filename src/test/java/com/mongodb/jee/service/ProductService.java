@@ -1,7 +1,5 @@
 package com.mongodb.jee.service;
 
-import java.util.Iterator;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -13,10 +11,10 @@ import javax.ws.rs.core.MediaType;
 import com.mongodb.DBObject;
 import com.mongodb.jee.PageResult;
 
-import dojo.store.RequestPageRange;
+import dojo.store.PageRangeRequest;
 
 @Path("/")
-public interface PersonService {
+public interface ProductService {
 
 	@GET
 	@Path("/findOne")
@@ -26,7 +24,7 @@ public interface PersonService {
 	@GET
 	@Path("/find")
 	@Produces(MediaType.APPLICATION_JSON)
-	Iterator<DBObject> find();
+	Iterable<DBObject> find();
 
 	@GET
 	@Path("/findPage")
@@ -39,6 +37,6 @@ public interface PersonService {
 	@Path("/findPageRange")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	PageResult findPage(@QueryParam("range") RequestPageRange range);
+	PageResult findPage(@HeaderParam("Range") PageRangeRequest range);
 
 }

@@ -13,37 +13,48 @@ import com.mongodb.DBObject;
 
 public class BSONHelper {
 
-	public static Iterator<DBObject> toIterator(InputStream entityStream) throws IOException{
+	public static Iterable<DBObject> toIterable(InputStream entityStream)
+			throws IOException {
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(entityStream, writer);
 		String json = writer.toString();
 
 		BasicDBList o = (BasicDBList) JSON.parse(json);
-		return BSONHelper.toIterator(o);
-	}
-	
-public static Iterator<DBObject> toIterator(BasicBSONList list) {
-	return new BasicBSONListWrapper(list);
-}
-
-static class BasicBSONListWrapper implements Iterator<DBObject> {
-
-	private final Iterator<Object> it;
-
-	public BasicBSONListWrapper(BasicBSONList list) {
-		this.it = list.iterator();
+		return BSONHelper.toIterable(o);
 	}
 
-	public boolean hasNext() {
-		return it.hasNext();
+	public static Iterable<DBObject> toIterable(BasicBSONList list) {
+		final Iterator<DBObject> it = toIterator(list);
+		return new Iterable<DBObject>() {
+
+			public Iterator<DBObject> iterator() {
+				return it;
+			}
+		};
 	}
 
-	public DBObject next() {
-		return (DBObject) it.next();
+	public static Iterator<DBObject> toIterator(BasicBSONList list) {
+		return new BasicBSONListWrapper(list);
 	}
 
-	public void remove() {
-		it.remove();
+	static class BasicBSONListWrapper implements Iterator<DBObject> {
+
+		private final Iterator<Object> it;
+
+		public BasicBSONListWrapper(BasicBSONList list) {
+			this.it = list.iterator();
+		}
+
+		public boolean hasNext() {
+			return it.hasNext();
+		}
+
+		public DBObject next() {
+			return (DBObject) it.next();
+		}
+
+		public void remove() {
+			it.remove();
+		}
 	}
-}
 }

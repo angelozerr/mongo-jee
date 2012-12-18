@@ -6,7 +6,7 @@ public class JsonRestHelper {
 
 	public static final String CONTENT_RANGE_RESPONSE_HEADER = "Content-Range";
 
-	public static RequestPageRange getRange(String range) {
+	public static PageRangeRequest getRange(String range) {
 		if (range == null || range.length() < 1) {
 			return null;
 		}
@@ -15,7 +15,7 @@ public class JsonRestHelper {
 		int fromIndex = Integer.parseInt(items.substring(0, index));
 		int toIndex = Integer.parseInt(items.substring(index + 1,
 				items.length()));
-		return new RequestPageRange(fromIndex, toIndex);
+		return new PageRangeRequest(fromIndex, toIndex);
 	}
 
 	public static String getContentRange(int fromItemIndex, int toItemIndex,
@@ -24,7 +24,7 @@ public class JsonRestHelper {
 				.append(toItemIndex).append("/").append(totalItems).toString();
 	}
 
-	public static ResponsePageRange getResponseRange(String contentRange) {
+	public static PageRangeResponse getResponseRange(String contentRange) {
 		if (contentRange == null || contentRange.length() < 1) {
 			return null;
 		}
@@ -39,7 +39,7 @@ public class JsonRestHelper {
 		int totalItems = Integer.parseInt(contentRange.substring(
 				indexTotal + 1, contentRange.length()));
 
-		return new ResponsePageRange(fromIndex, toIndex, totalItems);
+		return new PageRangeResponse(fromIndex, toIndex, totalItems);
 	}
 
 }

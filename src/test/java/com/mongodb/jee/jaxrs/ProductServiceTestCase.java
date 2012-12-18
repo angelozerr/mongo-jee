@@ -27,7 +27,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.jee.PageResult;
-import com.mongodb.jee.service.PersonService;
+import com.mongodb.jee.service.ProductService;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
@@ -35,9 +35,9 @@ import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.MongodConfig;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
-import dojo.store.RequestPageRange;
+import dojo.store.PageRangeRequest;
 
-public class JaxrsTest {
+public class ProductServiceTestCase {
 
 	private static final int PORT = 8999;
 
@@ -122,21 +122,16 @@ public class JaxrsTest {
 	}
 
 	@Test
-	public void t() {
-
-		List providers = new ArrayList();
-		providers.add(new DBObjectIteratorProvider());
-		providers.add(new BSONObjectProvider());
-		providers.add(new PageResultProvider());
-
-		PersonService client = JAXRSClientFactory.create(BASE_ADDRESS,
-				PersonService.class, providers);
-
+	public void findOne() {
+		ProductService client = createClient();
 		DBObject person = client.findOne();
-
 		System.err.println(person);
+	}
 
-		Iterator<DBObject> persons = client.find();
+	@Test
+	public void find() {
+		ProductService client = createClient();
+		Iterator<DBObject> persons = client.find().iterator();
 		while (persons.hasNext()) {
 			DBObject p = persons.next();
 			System.err.println(p);
@@ -146,25 +141,14 @@ public class JaxrsTest {
 
 	@Test
 	public void findPage() {
-		List providers = new ArrayList();
-		providers.add(new DBObjectIteratorProvider());
-		providers.add(new BSONObjectProvider());
-		providers.add(new PageResultProvider());
-
-		PersonService client = JAXRSClientFactory.create(BASE_ADDRESS,
-				PersonService.class, providers);
-
-		WebClient.getConfig(client).getInInterceptors()
-				.add(new LoggingInInterceptor());
-		WebClient.getConfig(client).getOutInterceptors()
-				.add(new LoggingOutInterceptor());
+		ProductService client = createClient();
 
 		PageResult page = client.findPage(0, 9);
 		Assert.assertEquals(0, page.getFromItemIndex());
 		Assert.assertEquals(9, page.getToItemIndex());
 		Assert.assertEquals(1, page.getTotalItems());
 
-		Iterator<DBObject> persons = page.getItems();
+		Iterator<DBObject> persons = page.getItems().iterator();
 		while (persons.hasNext()) {
 			DBObject p = persons.next();
 			System.err.println(p);
@@ -175,27 +159,16 @@ public class JaxrsTest {
 
 	@Test
 	public void findPageRange() {
-		List providers = new ArrayList();
-		providers.add(new DBObjectIteratorProvider());
-		providers.add(new BSONObjectProvider());
-		providers.add(new PageResultProvider());
+		ProductService client = createClient();
 
-		PersonService client = JAXRSClientFactory.create(BASE_ADDRESS,
-				PersonService.class, providers);
-
-		WebClient.getConfig(client).getInInterceptors()
-				.add(new LoggingInInterceptor());
-		WebClient.getConfig(client).getOutInterceptors()
-				.add(new LoggingOutInterceptor());
-
-		RequestPageRange range = new RequestPageRange(0, 9);
+		PageRangeRequest range = new PageRangeRequest(0, 9);
 		PageResult page = client.findPage(range);
 
 		Assert.assertEquals(0, page.getFromItemIndex());
 		Assert.assertEquals(9, page.getToItemIndex());
 		Assert.assertEquals(1, page.getTotalItems());
 
-		Iterator<DBObject> persons = page.getItems();
+		Iterator<DBObject> persons = page.getItems().iterator();
 		while (persons.hasNext()) {
 			DBObject p = persons.next();
 			System.err.println(p);
@@ -203,4 +176,21 @@ public class JaxrsTest {
 
 		System.err.println(page.getTotalItems());
 	}
+
+	private ProductService createClient() {
+		List providers = new ArrayList();
+		providers.add(new DBObjectIterableProvider());
+		providers.add(new BSONObjectProvider());
+		providers.add(new PageResultProvider());
+
+		ProductService client = JAXRSClientFactory.create(BASE_ADDRESS,
+				ProductService.class, providers);
+
+		WebClient.getConfig(client).getInInterceptors()
+				.add(new LoggingInInterceptor());
+		WebClient.getConfig(client).getOutInterceptors()
+				.add(new LoggingOutInterceptor());
+		return client;
+	}
+
 }
