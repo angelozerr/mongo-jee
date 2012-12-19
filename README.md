@@ -71,9 +71,12 @@ Once MongoServletContextListener is started, you can use MongoProvider.getMongo(
 
 [Pagination](https://github.com/angelozerr/mongo-jee/wiki/Pagination)
 
-Download
-=========
+# Download
 
 Only source are available.
+
+# Demo
+
+TODO : commit demo with Dojo Grid which displays paginated JSON products coming from the JAX-RS ProductsService which connects to MongoDB.
 
 
