@@ -73,7 +73,7 @@ Once MongoServletContextListener is started, you can use MongoProvider.getMongo(
 
 # Download
 
-Only source are available.
+Only source are available for this moment.
 
 # Demo
 
