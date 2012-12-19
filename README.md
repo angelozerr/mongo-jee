@@ -69,7 +69,7 @@ Once MongoServletContextListener is started, you can use MongoProvider.getMongo(
 
 ## Pagination
 
-[Pagination](https://github.com/angelozerr/mongo-jee/wiki/Pagination)
+[Pagination](https://github.com/angelozerr/mongo-jee/wiki/Pagination) to help pagination with MongoDB and client (like Dojo) to consumes the paginated list.
 
 # Download
 
