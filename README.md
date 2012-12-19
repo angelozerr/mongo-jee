@@ -26,7 +26,7 @@ Here the list of the features provided by Mongo JEE:
             }
   	  	}
 
-The JAX-RS support provides several JAX-RS Provider (MesageBodyReader/MesageBodyWriter) which serialize/deserialize DBObject, DBCursor, etc to JSON stream.
+The JAX-RS support provides [several JAX-RS Provider] (https://github.com/angelozerr/mongo-jee/tree/master/src/main/java/com/mongodb/jee/jaxrs) which serialize/deserialize DBObject, DBCursor, etc to JSON stream.
 
 ##JSON streaming
 
