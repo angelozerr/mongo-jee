@@ -6,6 +6,31 @@
 	<artifactId>mongo-jee</artifactId>
 	<name>JEE support for MongoDB</name>
 	<description>Web support + JAX-RS support for MongoDB.</description>
+	<properties>
+		<github.global.server>github</github.global.server>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>downloads-maven-plugin</artifactId>
+				<version>0.6</version>
+				<configuration>
+					<description>${project.version} release of ${project.name}</description>
+					<override>true</override>
+					<includeAttached>true</includeAttached>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+						<phase>install</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>org.mongodb</groupId>
@@ -63,5 +88,15 @@
 			<version>2.1</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
+		</dependency>
 	</dependencies>
+	<scm>
+		<url>https://github.com/opensagres/mongo-jee</url>
+		<connection>scm:git:https://github.com/opensagres/mongo-jee.git</connection>
+		<developerConnection>scm:git:http://github.com/opensagres/mongo-jee.git</developerConnection>
+	</scm>
 </project>
