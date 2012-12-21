@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+	<link rel="stylesheet" href="scripts/dojo-release-1.8.1/dojo/../dijit/themes/claro/claro.css">
+	<style type="text/css">@import "scripts/dojo-release-1.8.1/dojo/../dojo/resources/dojo.css";
+@import "scripts/dojo-release-1.8.1/dojo/../dijit/themes/claro/claro.css";
+@import "scripts/dojo-release-1.8.1/dojo/../dojox/grid/enhanced/resources/claro/EnhancedGrid.css";
+@import "scripts/dojo-release-1.8.1/dojo/../dojox/grid/enhanced/resources/EnhancedGrid_rtl.css";
+
+/*Grid need a explicit width/height by default*/
+#grid {
+    width: 43em;
+    height: 20em;
+}</style>
+<script>dojoConfig = {parseOnLoad: true, async : true}</script><script src='scripts/dojo-release-1.8.1/dojo/dojo.js'></script><script>
+
+require(["dojo/dom", "dojo/domReady!", "dojox/grid/EnhancedGrid", "dojox/grid/enhanced/plugins/Pagination", "dojox/data/JsonRestStore"],function(){
+    /*set up data store*/
+    
+    var store = new dojox.data.JsonRestStore({target:"jaxrs/products"});
+
+    
+    /*set up layout*/
+    var layout = [[
+      {name: 'Title', field: 'title', width: "200px"},
+      {name: 'Description', field: 'description', width: "250px"}
+    ]];
+
+    /*create a new grid:*/
+    var grid = new dojox.grid.EnhancedGrid({
+        id: 'grid',
+        store: store,
+        structure: layout,
+        rowSelector: '20px',
+        plugins: {
+          pagination: {
+              pageSizes: ["25", "50", "100", "All"],
+              description: true,
+              sizeSwitch: true,
+              pageStepper: true,
+              gotoButton: true,
+                      /*page step to be displayed*/
+              maxPageStep: 4,
+                      /*position of the pagination bar*/
+              position: "bottom"
+          }
+        }
+    }, document.createElement('div'));
+
+    /*append the new grid to the div*/
+    dojo.byId("gridDiv").appendChild(grid.domNode);
+
+    /*Call startup() to render the grid*/
+    grid.startup();
+});</script>
+</head>
+<body class="claro">
+    <div id="gridDiv"></div>
+</body>
+</html>
