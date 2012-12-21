@@ -3,7 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mongodb</groupId>
 	<version>0.0.1-SNAPSHOT</version>
-	<artifactId>mongo-jee</artifactId>
+	<artifactId>mongo-jee-parent</artifactId>
+	<packaging>pom</packaging>
 	<name>JEE support for MongoDB</name>
 	<description>Web support + JAX-RS support for MongoDB.</description>
 	<properties>
@@ -99,4 +100,8 @@
 		<connection>scm:git:https://github.com/opensagres/mongo-jee.git</connection>
 		<developerConnection>scm:git:http://github.com/opensagres/mongo-jee.git</developerConnection>
 	</scm>
+	<modules>
+		<module>mongo-jee</module>
+		<module>mongo-jee-webapps</module>
+	</modules>
 </project>
