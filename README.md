@@ -65,7 +65,7 @@ This idea was suggested to Mongo Java Driver in the [JAVA-709 issue](https://jir
       	  <param-value>mongodb://localhost:12345</param-value>
       	</context-param>
         
-Once MongoServletContextListener is started, you can use MongoProvider.getMongo() anywhere
+Once MongoServletContextListener is started, you can use MongoProvider.connect() anywhere
 
 ## Pagination
 
