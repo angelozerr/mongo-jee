@@ -22,7 +22,7 @@ public class JaxrsProductsService {
 	@GET
 	@Path("/init")
 	public void initializeData() {
-		DB db = MongoProvider.getMongo().getDB("ecommerce");
+		DB db = MongoProvider.connect().getDB("ecommerce");
 		DBCollection products = db.getCollection("products");
 		DBObject product = null;
 		for (int i = 0; i < 20000; i++) {
@@ -38,7 +38,7 @@ public class JaxrsProductsService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public PageResult findProducts(@HeaderParam("Range") PageRangeRequest range) {
-		DB db = MongoProvider.getMongo().getDB("ecommerce");
+		DB db = MongoProvider.connect().getDB("ecommerce");
 		DBCollection products = db.getCollection("products");
 		return new PageResult(products.find(), range.getFromIndex(),
 				range.getToIndex());

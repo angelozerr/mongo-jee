@@ -1,5 +1,5 @@
 /**
- *      Copyright (C) 2012 Angelo Zerr <angelo.zerr@gmail.com>.
+ *   Copyright (C) 2012 Angelo Zerr <angelo.zerr@gmail.com> and Pascal Leclercq <pascal.leclercq@gmail.com>
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -46,6 +46,16 @@ public abstract class AbstractProvider<T> implements MessageBodyReader<T>,
 		return isSupported(type, genericType, annotations, mediaType);
 	}
 
+	/**
+	 * Returns true if the given class type, media type is supported and false
+	 * otherwise.
+	 * 
+	 * @param type
+	 * @param genericType
+	 * @param annotations
+	 * @param mediaType
+	 * @return
+	 */
 	protected abstract boolean isSupported(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType);
 }
