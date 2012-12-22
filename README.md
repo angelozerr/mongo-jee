@@ -51,6 +51,14 @@ which works with Writer/OutputStream:
       
 This idea was suggested to Mongo Java Driver in the [JAVA-709 issue](https://jira.mongodb.org/browse/JAVA-709)
 
+## MongoHolder
+
+Mongo Java  Driver provides com.mongodb.[Mongo.Holder](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb//Mongo.java) helper to hold several 
+static Mongo instances for several Mongo uri. However, this holder doesn't manage deconnection, default Mongo instance.
+
+Mongo JEE provides the com.mongodb.jee.[MongoHolder](https://github.com/angelozerr/mongo-jee/blob/master/mongo-jee/src/main/java/com/mongodb/jee/MongoHolder.java) which provides 
+several methods manage deconnection, default Mongo instance. 
+
 ## Initialize Mongo with ServletContextListener
 
 [Initialize Mongo with ServletContextListener] (https://github.com/angelozerr/mongo-jee/wiki/Initialize-Mongo-with-ServletContextListener):  
@@ -65,7 +73,8 @@ This idea was suggested to Mongo Java Driver in the [JAVA-709 issue](https://jir
       	  <param-value>mongodb://localhost:12345</param-value>
       	</context-param>
         
-Once MongoServletContextListener is started, you can use MongoProvider.connect() anywhere
+When MongoServletContextListener is started it initialize default Mongo connect in the com.mongodb.jee.[MongoHolder](https://github.com/angelozerr/mongo-jee/blob/master/mongo-jee/src/main/java/com/mongodb/jee/MongoHolder.java).
+After that, you can use MongoHolder.connect() anywhere in your code.
 
 ## Pagination
 
