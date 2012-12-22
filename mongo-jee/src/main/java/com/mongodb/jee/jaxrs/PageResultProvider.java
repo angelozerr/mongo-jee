@@ -52,13 +52,25 @@ public class PageResultProvider extends AbstractProvider<PageResult> {
 			OutputStream entityStream) throws IOException,
 			WebApplicationException {
 
+		// set HTTP Header response with paging info :
+		// ContentRange : $from-$to/$total
 		setContentRange(httpHeaders, page.getFromItemIndex(),
 				page.getToItemIndex(), page.getTotalItems());
 
+		// Write the Iterable<DBObject> (like DBCursor) as JSON array stream.
 		Iterable<DBObject> cursor = page.getItems();
 		JSON.serialize(cursor, entityStream);
 	}
 
+	/**
+	 * Set HTTP Header response with paging info : ContentRange :
+	 * $from-$to/$total
+	 * 
+	 * @param httpHeaders
+	 * @param fromItemIndex
+	 * @param toItemIndex
+	 * @param totalItems
+	 */
 	protected void setContentRange(MultivaluedMap<String, Object> httpHeaders,
 			int fromItemIndex, int toItemIndex, int totalItems) {
 		String range = JsonRestHelper.getContentRange(fromItemIndex,
@@ -72,6 +84,7 @@ public class PageResultProvider extends AbstractProvider<PageResult> {
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 
+		// Buildthe range from the HTTP Response Header ContentRange : $from-$to/$total 
 		PageRangeResponse range = getContentRange(httpHeaders);
 
 		Iterable<DBObject> items = BSONHelper.toIterable(entityStream);

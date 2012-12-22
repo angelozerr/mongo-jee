@@ -50,6 +50,7 @@ public class BSONObjectProvider extends AbstractProvider<BSONObject> {
 			OutputStream entityStream) throws IOException,
 			WebApplicationException {
 
+		// Write the BSON object as JSON stream.
 		JSON.serialize(BSONObject, entityStream);
 	}
 
@@ -58,6 +59,8 @@ public class BSONObjectProvider extends AbstractProvider<BSONObject> {
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 
+		// Parse the input JSON stream to BSONObject
+		// FIXME : JSON#parse should manage stream and not only String.
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(entityStream, writer);
 		String json = writer.toString();

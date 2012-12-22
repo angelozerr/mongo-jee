@@ -49,6 +49,8 @@ public class DBObjectIterableProvider extends
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
 			WebApplicationException {
+		
+		// Write the Iterable<DBObject> (like DBCursor) as JSON array stream.
 		JSON.serialize(cursor, entityStream);
 	}
 
@@ -57,6 +59,7 @@ public class DBObjectIterableProvider extends
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 
+		// Transform the JSON array stream to iterable DBObject
 		return BSONHelper.toIterable(entityStream);
 	}
 
@@ -64,8 +67,10 @@ public class DBObjectIterableProvider extends
 	protected boolean isSupported(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
 		if (!Iterable.class.isAssignableFrom(type)) {
+			// the given clas type is not Iterable
 			return false;
 		}
+		// Test if it's Iterable<DBObject>
 		if (genericType instanceof ParameterizedType) {
 			ParameterizedType parameterizedType = (ParameterizedType) genericType;
 			Type[] actualTypeArguments = parameterizedType
