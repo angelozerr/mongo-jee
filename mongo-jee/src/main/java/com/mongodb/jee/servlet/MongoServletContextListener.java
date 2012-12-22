@@ -24,6 +24,32 @@ import javax.servlet.ServletContextListener;
 import com.mongodb.MongoURI;
 import com.mongodb.jee.MongoHolder;
 
+/**
+ * 
+ * Mongo {@link ServletContextListener} implementation is used :
+ * 
+ * <ul>
+ * <li>on contextInitialized: initialize the default connection of the Mongo in
+ * the {@link MongoHolder} where MongoURI is retrieved from the web.xml.</li>
+ * <li>on contextDestroyed : close the all Mongo registered in the
+ * {@link MongoHolder}.</li>
+ * </ul>
+ * 
+ * Here a sample to use this {@link ServletContextListener} in a web.xml:
+ * 
+ * <code>
+ * 	<listener>
+		<listener-class>com.mongodb.jee.servlet.MongoServletContextListener
+		</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>mongoURI</param-name>
+		<param-value>mongodb://localhost:27017</param-value>
+	</context-param>
+	</code>
+ * 
+ */
 public class MongoServletContextListener implements ServletContextListener {
 
 	private static final String MONGO_URI_PARAM = "mongoURI";

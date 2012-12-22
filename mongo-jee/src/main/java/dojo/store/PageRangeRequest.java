@@ -21,13 +21,12 @@ import dojo.jaxb.PageRangeRequestAdapter;
 
 /**
  * 
- * <cite> The store uses HTTP's Range: header to perform paging. When a request
+ * The store uses HTTP's Range: header to perform paging. When a request
  * is made for a range of items, the store will include a Range: header with an
  * items range unit specifying the range. For example:
  * 
  * Range: items=0-24 
  * 
- * </cite>
  * 
  * @see http://dojotoolkit.org/reference-guide/1.8/dojo/store/JsonRest.html#id7
  */

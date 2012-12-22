@@ -84,17 +84,27 @@ public class PageResultProvider extends AbstractProvider<PageResult> {
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 
-		// Buildthe range from the HTTP Response Header ContentRange : $from-$to/$total 
+		// Build the range from the HTTP Response Header ContentRange :
+		// $from-$to/$total
+
 		PageRangeResponse range = getContentRange(httpHeaders);
 
+		// Build the Iterable<DBObject> from the JSON array stream.
 		Iterable<DBObject> items = BSONHelper.toIterable(entityStream);
 
+		// Return an instance of page result.
 		int fromItemIndex = range.getFromIndex();
 		int toItemIndex = range.getToIndex();
 		int totalItems = range.getTotalItems();
 		return new PageResult(items, fromItemIndex, toItemIndex, totalItems);
 	}
 
+	/**
+	 * Returns the ContentRange : $from-$to/$total from the HTTP Response Header
+	 * 
+	 * @param httpHeaders
+	 * @return
+	 */
 	protected PageRangeResponse getContentRange(
 			MultivaluedMap<String, String> httpHeaders) {
 		String contentRange = httpHeaders

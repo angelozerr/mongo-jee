@@ -26,7 +26,7 @@ import com.mongodb.MongoURI;
 
 /**
  * Holder of {@link Mongo} instance which manages connect/disconnection of Mongo
- * and default connection .
+ * and default connection.
  * 
  */
 public class MongoHolder {

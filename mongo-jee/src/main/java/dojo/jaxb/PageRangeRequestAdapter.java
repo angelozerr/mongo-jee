@@ -20,6 +20,11 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import dojo.store.JsonRestHelper;
 import dojo.store.PageRangeRequest;
 
+/**
+ * 
+ * JAXB Adapter to serialize/deserialize page range.
+ *
+ */
 public class PageRangeRequestAdapter extends XmlAdapter<String, PageRangeRequest> {
 
 	@Override
