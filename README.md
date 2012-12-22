@@ -26,7 +26,7 @@ Here the list of the features provided by Mongo JEE:
             }
   	  	}
 
-The JAX-RS support provides [several JAX-RS Provider] (https://github.com/angelozerr/mongo-jee/tree/master/src/main/java/com/mongodb/jee/jaxrs) which serialize/deserialize DBObject, DBCursor, etc to JSON stream.
+The JAX-RS support provides [several JAX-RS Provider] (https://github.com/angelozerr/mongo-jee/tree/master/mongo-jee/src/main/java/com/mongodb/jee/jaxrs) which serialize/deserialize DBObject, DBCursor, etc to JSON stream.
 
 ##JSON streaming
 
@@ -41,7 +41,7 @@ DBObject, DBCursor etc to JSON stream but it works only with StringBuilder. Here
         // Write the JSON string
         response.getWriter().write(json.toString());
 
-Mongo JEE provides com.mongodb.jee.util.[JSON](https://github.com/angelozerr/mongo-jee/blob/master/src/main/java/com/mongodb/jee/util/JSON.java)
+Mongo JEE provides com.mongodb.jee.util.[JSON](https://github.com/angelozerr/mongo-jee/blob/master/mongo-jee/src/main/java/com/mongodb/jee/util/JSON.java)
 which works with Writer/OutputStream:
 
         HttpServletResponse response = ...
