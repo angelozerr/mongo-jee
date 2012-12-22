@@ -22,6 +22,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import com.mongodb.MongoURI;
+import com.mongodb.jee.MongoHolder;
 
 public class MongoServletContextListener implements ServletContextListener {
 
@@ -31,14 +32,14 @@ public class MongoServletContextListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 		try {
 			MongoURI mongoURI = new MongoURI(getMongoURI(event));
-			MongoProvider.connect(mongoURI, true);
+			MongoHolder.connect(mongoURI, true);
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void contextDestroyed(ServletContextEvent event) {
-		MongoProvider.dispose();
+		MongoHolder.dispose();
 	}
 
 	private String getMongoURI(ServletContextEvent event) {
