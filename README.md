@@ -59,6 +59,8 @@ static Mongo instances for several Mongo uri. However, this holder doesn't manag
 Mongo JEE provides the com.mongodb.jee.[MongoHolder](https://github.com/angelozerr/mongo-jee/blob/master/mongo-jee/src/main/java/com/mongodb/jee/MongoHolder.java) which provides 
 several features like deconnection, default Mongo instance. 
 
+Please read [Using MogoHolder](https://github.com/angelozerr/mongo-jee/wiki/Using-MongoHolder) section for more information.
+
 ## Initialize Mongo with ServletContextListener
 
 [Initialize Mongo with ServletContextListener] (https://github.com/angelozerr/mongo-jee/wiki/Initialize-Mongo-with-ServletContextListener):  
