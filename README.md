@@ -73,9 +73,11 @@ several methods manage deconnection, default Mongo instance.
       	  <param-value>mongodb://localhost:12345</param-value>
       	</context-param>
         
-When MongoServletContextListener is started it initialize default Mongo connect in the com.mongodb.jee.[MongoHolder](https://github.com/angelozerr/mongo-jee/blob/master/mongo-jee/src/main/java/com/mongodb/jee/MongoHolder.java).
-After that, you can use MongoHolder.connect() anywhere in your code.
+When MongoServletContextListener is started it initializes default Mongo connection with com.mongodb.jee.[MongoHolder](https://github.com/angelozerr/mongo-jee/blob/master/mongo-jee/src/main/java/com/mongodb/jee/MongoHolder.java).
+After that, you can use retrive this Mongo .connection anywhere in your code like this:
 
+      	Mongo mongo = MongoHolder.connect();
+        
 ## Pagination
 
 [Pagination](https://github.com/angelozerr/mongo-jee/wiki/Pagination) to help pagination with MongoDB and client (like Dojo) to consumes the paginated list.
