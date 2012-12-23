@@ -94,6 +94,9 @@ Only source are available for this moment.
 
 # Demo
 
-TODO : commit demo with Dojo Grid which displays paginated JSON products coming from the JAX-RS ProductsService which connects to MongoDB.
+Mongo JEE provides the [Mongo JEE Demo with Apache CXF and Dojo] (https://github.com/angelozerr/mongo-jee/wiki/Mongo-JEE-Demo-with-Apache-CXF-and-Dojo)
+which uses the features of Mongo JEE. This demo displays a paginated list of products. This WebApps deploys a JAX-RS REST service ProductsService which returns the paginated JSON products:
+
+![WebApps Overview](https://github.com/angelozerr/mongo-jee/wiki/images/WebAppsMongoDB_Overview.png)
 
 
