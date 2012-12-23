@@ -84,6 +84,10 @@ After that, you can use MongoHolder.connect() anywhere in your code.
 
 Only source are available for this moment.
 
+# License
+
+[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
 # Demo
 
 TODO : commit demo with Dojo Grid which displays paginated JSON products coming from the JAX-RS ProductsService which connects to MongoDB.
