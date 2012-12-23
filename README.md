@@ -53,11 +53,11 @@ This idea was suggested to Mongo Java Driver in the [JAVA-709 issue](https://jir
 
 ## MongoHolder
 
-Mongo Java  Driver provides com.mongodb.[Mongo.Holder](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb//Mongo.java) helper to hold several 
+Mongo Java Driver provides com.mongodb.[Mongo.Holder](https://github.com/mongodb/mongo-java-driver/blob/master/src/main/com/mongodb//Mongo.java) helper to hold several 
 static Mongo instances for several Mongo uri. However, this holder doesn't manage deconnection, default Mongo instance.
 
 Mongo JEE provides the com.mongodb.jee.[MongoHolder](https://github.com/angelozerr/mongo-jee/blob/master/mongo-jee/src/main/java/com/mongodb/jee/MongoHolder.java) which provides 
-several methods manage deconnection, default Mongo instance. 
+several features like deconnection, default Mongo instance. 
 
 ## Initialize Mongo with ServletContextListener
 
@@ -74,7 +74,7 @@ several methods manage deconnection, default Mongo instance.
       	</context-param>
         
 When MongoServletContextListener is started it initializes default Mongo connection with com.mongodb.jee.[MongoHolder](https://github.com/angelozerr/mongo-jee/blob/master/mongo-jee/src/main/java/com/mongodb/jee/MongoHolder.java).
-After that, you can use retrive this Mongo .connection anywhere in your code like this:
+After that, you can retrieve this Mongo .connection anywhere in your code like this:
 
       	Mongo mongo = MongoHolder.connect();
         
