@@ -9,7 +9,7 @@
   <packaging>war</packaging>
   <dependencies>
   	<dependency>
-  		<groupId>org.mongodb</groupId>
+  		<groupId>fr.opensagres</groupId>
   		<artifactId>mongo-jee</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
