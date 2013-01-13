@@ -45,7 +45,7 @@
 
 	<context-param>
 		<param-name>mongoURI</param-name>
-		<param-value>mongodb://localhost:27017</param-value>
+		<param-value>mongodb://demo:demo@ds045017.mongolab.com:45017/ecommerce</param-value>
 	</context-param>
 
 </web-app>
