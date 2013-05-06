@@ -21,8 +21,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
-import com.mongodb.MongoURI;
 
 /**
  * Holder of {@link Mongo} instance which manages connect/disconnection of Mongo
@@ -31,9 +32,9 @@ import com.mongodb.MongoURI;
  */
 public class MongoHolder {
 
-	private static final ConcurrentMap<MongoURI, Mongo> mongosCache = new ConcurrentHashMap<MongoURI, Mongo>();
+	private static final ConcurrentMap<MongoClientURI, Mongo> mongosCache = new ConcurrentHashMap<MongoClientURI, Mongo>();
 
-	private static MongoURI defaultMongoURI;
+	private static MongoClientURI defaultMongoClientURI;
 	private static Mongo defaultMongo;
 
 	private MongoHolder() {
@@ -41,8 +42,8 @@ public class MongoHolder {
 
 	/**
 	 * Returns the default {@link Mongo} instance. To set the default instance,
-	 * {@link MongoHolder#connect(MongoURI, boolean)} must be called before this
-	 * method with true parameter.
+	 * {@link MongoHolder#connect(MongoClientURI, boolean)} must be called
+	 * before this method with true parameter.
 	 * 
 	 * @return
 	 */
@@ -58,8 +59,8 @@ public class MongoHolder {
 	 * 
 	 * @return
 	 */
-	public static MongoURI getDefaultMongoURI() {
-		return defaultMongoURI;
+	public static MongoClientURI getDefaultMongoClientURI() {
+		return defaultMongoClientURI;
 	}
 
 	/**
@@ -79,7 +80,8 @@ public class MongoHolder {
 	 * @return
 	 * @throws UnknownHostException
 	 */
-	public static Mongo connect(MongoURI mongoURI) throws UnknownHostException {
+	public static Mongo connect(MongoClientURI mongoURI)
+			throws UnknownHostException {
 		return connect(mongoURI, false);
 	}
 
@@ -93,13 +95,13 @@ public class MongoHolder {
 	 * @return
 	 * @throws UnknownHostException
 	 */
-	public static Mongo connect(MongoURI mongoURI, boolean defaultMongo)
+	public static Mongo connect(MongoClientURI mongoURI, boolean defaultMongo)
 			throws UnknownHostException {
 
 		Mongo mongo = internalConnect(mongoURI);
 		if (defaultMongo) {
 			MongoHolder.defaultMongo = mongo;
-			MongoHolder.defaultMongoURI = mongoURI;
+			MongoHolder.defaultMongoClientURI = mongoURI;
 		}
 		return mongo;
 	}
@@ -109,9 +111,9 @@ public class MongoHolder {
 	 * 
 	 */
 	public static void disconnect() {
-		disconnect(defaultMongoURI);
+		disconnect(defaultMongoClientURI);
 		defaultMongo = null;
-		defaultMongoURI = null;
+		defaultMongoClientURI = null;
 	}
 
 	/**
@@ -137,14 +139,14 @@ public class MongoHolder {
 	 * @throws MongoException
 	 * @throws UnknownHostException
 	 */
-	public static Mongo internalConnect(MongoURI uri)
+	public static Mongo internalConnect(MongoClientURI uri)
 			throws UnknownHostException {
 
 		Mongo m = mongosCache.get(uri);
 		if (m != null)
 			return m;
 
-		m = new Mongo(uri);
+		m = new MongoClient(uri);
 
 		Mongo temp = mongosCache.putIfAbsent(uri, m);
 		if (temp == null) {
@@ -164,7 +166,7 @@ public class MongoHolder {
 	 * @param mongoURI
 	 *            the Mongo URI
 	 */
-	public static void disconnect(MongoURI mongoURI) {
+	public static void disconnect(MongoClientURI mongoURI) {
 		if (mongoURI == null) {
 			return;
 		}

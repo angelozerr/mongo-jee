@@ -21,7 +21,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.mongodb.MongoURI;
+import com.mongodb.MongoClientURI;
 import com.mongodb.jee.MongoHolder;
 
 /**
@@ -57,7 +57,7 @@ public class MongoServletContextListener implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent event) {
 		try {
-			MongoURI mongoURI = new MongoURI(getMongoURI(event));
+			MongoClientURI mongoURI = new MongoClientURI(getMongoURI(event));
 			MongoHolder.connect(mongoURI, true);
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
