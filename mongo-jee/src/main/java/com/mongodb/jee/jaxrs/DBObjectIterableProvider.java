@@ -29,6 +29,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.jee.util.BSONHelper;
 import com.mongodb.jee.util.JSON;
@@ -66,8 +67,12 @@ public class DBObjectIterableProvider extends
 	@Override
 	protected boolean isSupported(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
+		if (DBCursor.class.isAssignableFrom(type)) {
+			// the given class type is DBCursor
+			return true;
+		}
 		if (!Iterable.class.isAssignableFrom(type)) {
-			// the given clas type is not Iterable
+			// the given class type is not Iterable
 			return false;
 		}
 		// Test if it's Iterable<DBObject>
