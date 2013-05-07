@@ -92,6 +92,10 @@ Only source are available for this moment.
 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
+# Article
+
+You can read following [articles](http://angelozerr.wordpress.com/about/mongo_jee/) about Mongo JEE.
+
 # Demo
 
 Mongo JEE provides the [Mongo JEE Demo with Apache CXF and Dojo] (https://github.com/angelozerr/mongo-jee/wiki/Mongo-JEE-Demo-with-Apache-CXF-and-Dojo)
