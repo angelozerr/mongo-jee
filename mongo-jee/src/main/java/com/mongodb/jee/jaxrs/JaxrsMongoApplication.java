@@ -21,20 +21,34 @@ import java.util.Set;
 import javax.ws.rs.core.Application;
 
 /**
- * Mongo JEE JAX-RS Application which register the Mongo JEE Provider. To use
- * it, extendns this class and register your REST services with
- * {@link JaxrsMongoApplication#addClass(Class)}
+ * Mongo JEE JAX-RS Application registers the Mongo JEE Provider. To use it,
+ * extend this class and register your REST services with :
+ * 
+ * <ul>
+ * <li> {@link JaxrsMongoApplication#addClass(Class)} if you wish to register
+ * JAX-RS Service which is instantiated for each request. Ex :
+ * 
+ * <code>addClass(MyService.class);</code></li>
+ * </li>
+ * <li>{@link JaxrsMongoApplication#addSingleton(Object)} if you wish to
+ * register JAX-RS Service as singleton. Ex :
+ * 
+ * <code>addSingleton(new MyService());</code></li>
+ * </li>
+ * </ul>
  * 
  */
 public class JaxrsMongoApplication extends Application {
 
 	private final Set<Class<?>> classes;
+	private final Set<Object> singletons;
 
 	public JaxrsMongoApplication() {
-		classes = new HashSet<Class<?>>();
+		this.classes = new HashSet<Class<?>>();
 		addClass(BSONObjectProvider.class);
 		addClass(DBObjectIterableProvider.class);
 		addClass(PageResultProvider.class);
+		this.singletons = new HashSet<Object>();
 	}
 
 	@Override
@@ -49,5 +63,19 @@ public class JaxrsMongoApplication extends Application {
 	 */
 	protected void addClass(Class<?> clazz) {
 		classes.add(clazz);
+	}
+
+	/**
+	 * Add singleton.
+	 * 
+	 * @param object
+	 */
+	protected void addSingleton(Object object) {
+		singletons.add(object);
+	}
+
+	@Override
+	public Set<Object> getSingletons() {
+		return singletons;
 	}
 }
