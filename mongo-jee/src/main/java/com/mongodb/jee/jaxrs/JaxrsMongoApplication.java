@@ -20,6 +20,10 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import com.mongodb.jee.jaxrs.providers.BSONObjectProvider;
+import com.mongodb.jee.jaxrs.providers.DBObjectIterableProvider;
+import com.mongodb.jee.jaxrs.providers.PageResultProvider;
+
 /**
  * Mongo JEE JAX-RS Application registers the Mongo JEE Provider. To use it,
  * extend this class and register your REST services with :
