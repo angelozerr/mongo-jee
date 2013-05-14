@@ -13,13 +13,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.mongodb.jee.jaxrs;
+package com.mongodb.jee.jaxrs.providers;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import javax.ws.rs.Consumes;
@@ -29,65 +29,60 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.jee.util.BSONHelper;
+import org.apache.commons.io.IOUtils;
+import org.bson.BSONObject;
+
 import com.mongodb.jee.util.JSON;
 
 /**
  * 
- * JAX-RS {@link Iterable<DBObject>} provider.
+ * JAX-RS {@link BSONObject} provider.
  * 
  */
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class DBObjectIterableProvider extends
-		AbstractProvider<Iterable<DBObject>> {
+public class BSONObjectProvider extends AbstractProvider<BSONObject> {
 
-	public void writeTo(Iterable<DBObject> cursor, Class<?> type,
-			Type genericType, Annotation[] annotations, MediaType mediaType,
+	public void writeTo(BSONObject BSONObject, Class<?> type, Type genericType,
+			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream) throws IOException,
 			WebApplicationException {
-		
-		// Write the Iterable<DBObject> (like DBCursor) as JSON array stream.
-		JSON.serialize(cursor, entityStream);
+
+		// Write the BSON object as JSON stream.
+		JSON.serialize(BSONObject, entityStream);
 	}
 
-	public Iterable<DBObject> readFrom(Class<Iterable<DBObject>> type,
-			Type genericType, Annotation[] annotations, MediaType mediaType,
+	public BSONObject readFrom(Class<BSONObject> type, Type genericType,
+			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 
-		// Transform the JSON array stream to iterable DBObject
-		return BSONHelper.toIterable(entityStream);
+		// Parse the input JSON stream to BSONObject
+		// FIXME : JSON#parse should manage stream and not only String.
+		StringWriter writer = new StringWriter();
+		IOUtils.copy(entityStream, writer);
+		String json = writer.toString();
+
+		return (BSONObject) JSON.parse(json);
 	}
 
+	/**
+	 * Returns true if the given type is a {@link BSONObject} and the given
+	 * media type is "application/json".
+	 * 
+	 * @param type
+	 *            clas type.
+	 * @param mediaType
+	 *            media type.
+	 * @return
+	 */
 	@Override
-	protected boolean isSupported(Class<?> type, Type genericType,
+	protected boolean isSupported(java.lang.Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		if (DBCursor.class.isAssignableFrom(type)) {
-			// the given class type is DBCursor
-			return true;
-		}
-		if (!Iterable.class.isAssignableFrom(type)) {
-			// the given class type is not Iterable
-			return false;
-		}
-		// Test if it's Iterable<DBObject>
-		if (genericType instanceof ParameterizedType) {
-			ParameterizedType parameterizedType = (ParameterizedType) genericType;
-			Type[] actualTypeArguments = parameterizedType
-					.getActualTypeArguments();
-			for (int i = 0; i < actualTypeArguments.length; i++) {
-				Class<?> a = (Class<?>) actualTypeArguments[i];
-				if (DBObject.class.isAssignableFrom(a)) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return BSONObject.class.isAssignableFrom(type)
+				&& mediaType.isCompatible(MediaType.APPLICATION_JSON_TYPE);
 	}
 
 }

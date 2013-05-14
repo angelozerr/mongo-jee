@@ -21,6 +21,9 @@ import org.junit.Test;
 
 import com.mongodb.DBObject;
 import com.mongodb.jee.PageResult;
+import com.mongodb.jee.jaxrs.providers.BSONObjectProvider;
+import com.mongodb.jee.jaxrs.providers.DBObjectIterableProvider;
+import com.mongodb.jee.jaxrs.providers.PageResultProvider;
 import com.mongodb.jee.service.ProductService;
 
 import dojo.store.PageRangeRequest;

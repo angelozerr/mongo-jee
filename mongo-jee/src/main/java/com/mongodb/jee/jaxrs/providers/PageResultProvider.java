@@ -13,7 +13,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package com.mongodb.jee.jaxrs;
+package com.mongodb.jee.jaxrs.providers;
 
 import java.io.IOException;
 import java.io.InputStream;
