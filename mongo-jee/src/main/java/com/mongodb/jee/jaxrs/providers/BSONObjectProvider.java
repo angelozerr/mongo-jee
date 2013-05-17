@@ -29,10 +29,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.commons.io.IOUtils;
 import org.bson.BSONObject;
 
 import com.mongodb.jee.util.JSON;
+import com.mongodb.jee.util.org.apache.commons.io.IOUtils;
 
 /**
  * 

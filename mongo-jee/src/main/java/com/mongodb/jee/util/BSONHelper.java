@@ -20,11 +20,11 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Iterator;
 
-import org.apache.commons.io.IOUtils;
 import org.bson.types.BasicBSONList;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
+import com.mongodb.jee.util.org.apache.commons.io.IOUtils;
 
 /**
  * Helper classes for BSON object.
