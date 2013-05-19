@@ -6,7 +6,7 @@
 		<version>7</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>fr.opensagres.mongo</groupId>
+	<groupId>fr.opensagres.mongodb</groupId>
 	<version>1.0.0-SNAPSHOT</version>
 	<artifactId>mongo-jee-parent</artifactId>
 	<packaging>pom</packaging>
