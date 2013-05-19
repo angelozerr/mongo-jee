@@ -12,6 +12,37 @@
 	<packaging>pom</packaging>
 	<name>JEE support for MongoDB</name>
 	<description>Web support + JAX-RS support for MongoDB.</description>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>angelozerr</id>
+			<name>Angelo Zerr</name>
+			<email>angelo.zerr@gmail.com</email>
+			<roles>
+				<role>architect</role>
+				<role>developper</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>pascalleclercq</id>
+			<name>Pascal Leclercq</name>
+			<email>pascal.leclercq@gmail.com</email>
+			<roles>
+				<role>contributor</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -29,4 +60,76 @@
 		<module>mongo-jee</module>
 		<module>mongo-jee-webapps</module>
 	</modules>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<basedir>${basedir}</basedir>
+					<header>header.txt</header>
+					<includes>
+						<include>src/**</include>
+						<include>**/test/**</include>
+						<include>build.properties</include>
+						<include>plugin.xml</include>
+					</includes>
+					<excludes>
+						<exclude>target/**</exclude>
+						<exclude>**/*.txt</exclude>
+						<exclude>**/*.xml</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.3.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.4.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>1.9.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.12</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.4.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/angelozerr/mongo-jee/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>https://opensagres.ci.cloudbees.com/job/mongo-jee%20build/</url>
+	</ciManagement>
 </project>
