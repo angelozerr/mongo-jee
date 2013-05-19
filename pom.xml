@@ -61,7 +61,7 @@
 		<module>mongo-jee-webapps</module>
 	</modules>
 	<build>
-		<defaultGoal>install</defaultGoal>
+		<defaultGoal>clean install</defaultGoal>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
