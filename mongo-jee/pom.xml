@@ -47,21 +47,26 @@
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 			<version>2.10.1</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>jsr311-api</artifactId>
 			<version>1.1.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -75,7 +80,6 @@
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 			<version>1.27</version>
-			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
 
@@ -86,12 +90,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>javax.xml</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.1</version>
-			<scope>compile</scope>
-		</dependency>
 
 	</dependencies>
 	<profiles>
