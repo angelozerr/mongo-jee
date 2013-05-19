@@ -74,19 +74,12 @@
 				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
 				<configuration>
+					<strictCheck>true</strictCheck>
 					<basedir>${basedir}</basedir>
-					<header>header.txt</header>
+					<header>license.txt</header>
 					<includes>
-						<include>src/**</include>
-						<include>**/test/**</include>
-						<include>build.properties</include>
-						<include>plugin.xml</include>
+						<include>src/main/java/**/*.java</include>
 					</includes>
-					<excludes>
-						<exclude>target/**</exclude>
-						<exclude>**/*.txt</exclude>
-						<exclude>**/*.xml</exclude>
-					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
