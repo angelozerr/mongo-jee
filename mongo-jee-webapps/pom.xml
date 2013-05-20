@@ -8,6 +8,16 @@
 	</parent>
 	<artifactId>mongo-jee-webapps</artifactId>
 	<packaging>war</packaging>
+	<build>
+		<plugins>
+		<plugin>
+			<artifactId>maven-deploy-plugin</artifactId>
+			<configuration>
+				<skip>true</skip>
+			</configuration>
+		</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>fr.opensagres.mongodb</groupId>
