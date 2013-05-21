@@ -86,7 +86,13 @@ After that, you can retrieve this Mongo .connection anywhere in your code like t
 
 # Download
 
-Only source are available for this moment.
+You can download [mongo-jee-1.0.0.jar](http://search.maven.org/remotecontent?filepath=fr/opensagres/mongodb/mongo-jee/1.0.0/mongo-jee-1.0.0.jar) or use maven : 
+
+        <dependency>
+            <groupId>fr.opensagres.mongodb</groupId>
+            <artifactId>mongo-jee-parent</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
 # License
 
