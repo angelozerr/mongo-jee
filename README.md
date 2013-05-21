@@ -90,7 +90,7 @@ You can download [mongo-jee-1.0.0.jar](http://search.maven.org/remotecontent?fil
 
         <dependency>
             <groupId>fr.opensagres.mongodb</groupId>
-            <artifactId>mongo-jee-parent</artifactId>
+            <artifactId>mongo-jee</artifactId>
             <version>1.0.0</version>
         </dependency>
 
