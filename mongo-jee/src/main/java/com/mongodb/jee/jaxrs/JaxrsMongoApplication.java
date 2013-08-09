@@ -231,7 +231,7 @@ import com.mongodb.jee.jaxrs.providers.PageResultProvider;
  * </ul>
  * 
  */
-public class JaxrsMongoApplication extends Application {
+public abstract class JaxrsMongoApplication extends Application {
 
 	private final Set<Class<?>> classes;
 	private final Set<Object> singletons;
